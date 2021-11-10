@@ -4,7 +4,7 @@
 
 Estamos buscando candidatos para fazer parte do nosso TIME, então criamos este pequeno desafio para melhor conhecer as qualidades dos profissionais.
 
-**Atenção:** Crie um fork desse projeto no seu Perfil do GitHub e depois nos envie no email -> victoe.gomes@topos.inf.br
+**Atenção:** Crie um fork desse projeto no seu Perfil do GitHub e depois nos envie o link para o email -> victor.gomes@topos.inf.br copinando paara -> rodolfo.neto@topos.inf.br
 
 ### Neste Desafio serão avaliados os conhecimentos em:
 
