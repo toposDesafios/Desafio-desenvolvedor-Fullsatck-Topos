@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from 'axios';
 
 function App() {
 
+  const [dataDB, setDataDB] = useState([]);
   const [nameEmployee, setNameEmployee] = useState('');
   const [birthDateEmployee, setBirthDateEmployee] = useState('');
   const [numRgEmployee, setNumRgEmployee] = useState('');
@@ -22,6 +23,13 @@ function App() {
     });
   };
 
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/getEmployee').then((response) => {
+      setDataDB(response.data);
+      console.log(response.data);
+    });
+  }, []) ;
+
   return (
     <div className="App">
       <h1>Desafio</h1>
@@ -33,11 +41,12 @@ function App() {
         <input type="text" name="nome_mae" onChange={(e) => {setNameMotherEmployee(e.target.value)}}></input>
         <input type="submit" onClick={setSubmit}></input>
       </div>
-      {nameEmployee}
-      {birthDateEmployee}
-      {numRgEmployee}
-      {numCpfEmployee}
-      {nameMotherEmployee}
+      
+      <div className="list-inputs">
+        {dataDB.map((val)=> {
+          return <li>Nome: {val.nome}</li>
+        })}
+      </div>
     </div>
   );
 }
