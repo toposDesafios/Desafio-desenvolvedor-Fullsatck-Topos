@@ -4,42 +4,55 @@ import Axios from 'axios';
 
 function App() {
 
-  const [dataDB, setDataDB] = useState([]);
-  const [codFuncionario, setCodFuncionario] = useState('');
-  const [nameEmployee, setNameEmployee] = useState('');
-  const [birthDateEmployee, setBirthDateEmployee] = useState('');
-  const [numRgEmployee, setNumRgEmployee] = useState('');
-  const [numCpfEmployee, setNumCpfEmployee] = useState('');
-  const [nameMotherEmployee, setNameMotherEmployee] = useState('');
+  const [dataEmployee, setDataEmployee] = useState([]);
+  const [dataDependent, setDataDependent] = useState([]);
+  const [codEmployee, setCodEmployee] = useState('');
+  const [name, setName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [numRg, setNumRg] = useState('');
+  const [numCpf, setNumCpf] = useState('');
+  const [nameMother, setNameMother] = useState('');
 
   const setSubmitEmployee = () => {
     Axios.post('http://localhost:3001/api/insertEmployee', {
-      nome: nameEmployee, 
-      data_nascimento: birthDateEmployee, 
-      num_rg: numRgEmployee, 
-      num_cpf: numCpfEmployee, 
-      nome_mae: nameMotherEmployee, 
+      nome: name, 
+      data_nascimento: birthDate, 
+      num_rg: numRg, 
+      num_cpf: numCpf, 
+      nome_mae: nameMother, 
     }).then(() => {
-      alert('teste');
+      return alert('Success');
     });
   };
 
-  const setSubmitDependent = () => {
-    Axios.post('http://localhost:3001/api/insertDependent', {
-      cod_funcionario: codFuncionario, 
-      nome: nameEmployee, 
-      data_nascimento: birthDateEmployee, 
-      num_rg: numRgEmployee, 
-      num_cpf: numCpfEmployee, 
-      nome_mae: nameMotherEmployee, 
-    }).then(() => {
-      alert('teste');
-    });
+  const setSubmitDependent = (e) => {
+    e.preventDefault();
+    if (codEmployee !== '') {
+      Axios.post('http://localhost:3001/api/insertDependent', {
+        cod_funcionario: codEmployee, 
+        nome: name, 
+        data_nascimento: birthDate, 
+        num_rg: numRg, 
+        num_cpf: numCpf, 
+        nome_mae: nameMother, 
+      }).then(() => {
+        return alert('Success');
+      });  
+    } else {
+      return alert('selecione um funcionario');
+    }
   };
 
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getEmployee').then((response) => {
-      setDataDB(response.data);
+      setDataEmployee(response.data);
+      console.log(response.data);
+    });
+  }, []) ;
+
+  useEffect(() => {
+    Axios.get('http://localhost:3001/api/getDependent').then((response) => {
+      setDataDependent(response.data);
       console.log(response.data);
     });
   }, []) ;
@@ -48,36 +61,50 @@ function App() {
     <div className="App">
       <h1>Desafio</h1>
       <h2>Funcionario</h2>
-      <div className="list-inputs">
-        <input type="text" name="nome" onChange={(e) => {setNameEmployee(e.target.value)}}></input>
-        <input type="date" name="data_nascimento" onChange={(e) => {setBirthDateEmployee(e.target.value)}}></input>
-        <input type="text" name="num_rg" onChange={(e) => {setNumRgEmployee(e.target.value)}}></input>
-        <input type="text" name="num_cpf" onChange={(e) => {setNumCpfEmployee(e.target.value)}}></input>
-        <input type="text" name="nome_mae" onChange={(e) => {setNameMotherEmployee(e.target.value)}}></input>
-        <input type="submit" onClick={setSubmitEmployee}></input>
-      </div>
+      <form className="list-inputs" onSubmit={setSubmitEmployee}>
+        <input type="text" name="nome" placeholder="Nome" required onChange={(e) => {setName(e.target.value)}}></input>
+        <input type="date" name="data_nascimento" placeholder="Data de Nascimento" required onChange={(e) => {setBirthDate(e.target.value)}}></input>
+        <input type="text" name="num_rg" placeholder="Identidade" required onChange={(e) => {setNumRg(e.target.value)}}></input>
+        <input type="text" name="num_cpf" placeholder="CPF" required onChange={(e) => {setNumCpf(e.target.value)}}></input>
+        <input type="text" name="nome_mae" placeholder="Nome da Mãe" required onChange={(e) => {setNameMother(e.target.value)}}></input>
+        <input type="submit"></input>
+      </form>
 
       <h2>Dependente</h2>
-      <div className="list-inputs">
-        <select name="cod_funcionario" onChange={(e) => {setCodFuncionario(e.target.value)}}>
-          {dataDB.map((val)=> {
-            return <option value={val.cod_funcionario}>{val.nome}</option>
-          })}
+      <form className="list-inputs" onSubmit={setSubmitDependent}>
+        <select name="cod_funcionario" required onChange={(e) => {setCodEmployee(e.target.value)}}>
+          <option disabled={true} value={null} selected>Selecione</option>
+          {
+            dataEmployee.map((employee)=> {
+              return <option value={employee.cod_funcionario}>{employee.nome}</option>
+            })
+          }
         </select>
-        <input type="text" name="nome" onChange={(e) => {setNameEmployee(e.target.value)}}></input>
-        <input type="date" name="data_nascimento" onChange={(e) => {setBirthDateEmployee(e.target.value)}}></input>
-        <input type="text" name="num_rg" onChange={(e) => {setNumRgEmployee(e.target.value)}}></input>
-        <input type="text" name="num_cpf" onChange={(e) => {setNumCpfEmployee(e.target.value)}}></input>
-        <input type="text" name="nome_mae" onChange={(e) => {setNameMotherEmployee(e.target.value)}}></input>
-        <input type="submit" onClick={setSubmitDependent}></input>
-      </div>
+        <input type="text" name="nome" placeholder="Nome" required onChange={(e) => {setName(e.target.value)}}></input>
+        <input type="date" name="data_nascimento" required onChange={(e) => {setBirthDate(e.target.value); console.log(birthDate)}}></input>
+        <input type="text" name="num_rg" placeholder="Identidade" required onChange={(e) => {setNumRg(e.target.value)}}></input>
+        <input type="text" name="num_cpf" placeholder="CPF" required onChange={(e) => {setNumCpf(e.target.value)}}></input>
+        <input type="text" name="nome_mae" placeholder="Nome da Mãe" required onChange={(e) => {setNameMother(e.target.value)}}></input>
+        <input type="submit"></input>
+      </form>
       
       
       <h2>Lista</h2>
       <div className="list-inputs">
-        {dataDB.map((val)=> {
-          return <li>Nome: {val.nome}</li>
-        })}
+        {
+          dataEmployee.map( employee => {
+            return <li>
+              Funcionario: {employee.nome}
+              {
+                dataDependent.map( dependent => {
+                  if (employee.cod_funcionario === dependent.cod_funcionario ) {
+                    return <li>Dependente: {dependent.nome}</li>
+                  }
+                })
+              }
+            </li>
+          })
+        }
       </div>
     </div>
   );

@@ -51,6 +51,16 @@ app.get("/api/getEmployee", (request, response) => {
   });
 });
 
+app.get("/api/getDependent", (request, response) => {
+  const sql_select = `SELECT * FROM Dependente;`;
+  db.all(sql_select, (err, result) => {
+    if (err) {
+      return response.status(500).json({ err });
+    }
+    return response.status(200).json( result );
+  });
+});
+
 app.listen(3001, () => { 
   console.log("Server started (http://localhost:3001/)!");
 });
