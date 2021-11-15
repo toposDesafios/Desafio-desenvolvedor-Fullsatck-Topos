@@ -85,7 +85,7 @@ function App() {
         <input type="text" name="num_rg" placeholder="Identidade" required onChange={(e) => {setNumRg(e.target.value)}}></input>
         <input type="text" name="num_cpf" placeholder="CPF" required onChange={(e) => {setNumCpf(e.target.value)}}></input>
         <input type="text" name="nome_mae" placeholder="Nome da Mãe" required onChange={(e) => {setNameMother(e.target.value)}}></input>
-        <input type="submit"></input>
+        <input type="submit" value="Cadastrar"></input>
       </form>
 
       <h2>Dependente</h2>
@@ -103,7 +103,7 @@ function App() {
         <input type="text" name="num_rg" placeholder="Identidade" required onChange={(e) => {setNumRg(e.target.value)}}></input>
         <input type="text" name="num_cpf" placeholder="CPF" required onChange={(e) => {setNumCpf(e.target.value)}}></input>
         <input type="text" name="nome_mae" placeholder="Nome da Mãe" required onChange={(e) => {setNameMother(e.target.value)}}></input>
-        <input type="submit"></input>
+        <input type="submit" value="Cadastrar"></input>
       </form>
       
       
