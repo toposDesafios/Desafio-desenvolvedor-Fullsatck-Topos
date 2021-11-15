@@ -57,6 +57,24 @@ function App() {
     });
   }, []) ;
 
+  const handleRemoveEmployee = (e) => {
+    console.log(e.target.value);
+    Axios.post('http://localhost:3001/api/removeEmployee', {
+        cod_funcionario: e.target.value
+      }).then(() => {
+        return alert('Success');
+      });  
+  };
+
+  const handleRemoveDependent = (e) => {
+    console.log(e.target.value);
+    Axios.post('http://localhost:3001/api/removeDependent', {
+        cod_dependente: e.target.value
+      }).then(() => {
+        return alert('Success');
+      });  
+  };
+
   return (
     <div className="App">
       <h1>Desafio</h1>
@@ -95,10 +113,11 @@ function App() {
           dataEmployee.map( employee => {
             return <li>
               Funcionario: {employee.nome}
+              <button onClick={handleRemoveEmployee} value={employee.cod_funcionario}>x</button>
               {
                 dataDependent.map( dependent => {
                   if (employee.cod_funcionario === dependent.cod_funcionario ) {
-                    return <li>Dependente: {dependent.nome}</li>
+                    return <li>Dependente: {dependent.nome} <button onClick={handleRemoveDependent} value={dependent.cod_dependente}>x</button></li>
                   }
                 })
               }
