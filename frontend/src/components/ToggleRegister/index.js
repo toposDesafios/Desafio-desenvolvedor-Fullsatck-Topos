@@ -5,6 +5,18 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import './index.css';
 import { red } from '@mui/material/colors';
+import { createTheme } from '@material-ui/core/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0d47a1",
+    },
+    secondary: {
+      main: '#0d47a1',
+    },
+  },
+});
 
 const useStyles = makeStyles({
   root: {
@@ -13,7 +25,6 @@ const useStyles = makeStyles({
     position: 'absolute', 
     margin: 'auto auto auto -350px',      
     transform: 'rotate(-90deg)',
-    background: red,
   },
   button: {
     width: '200px',
@@ -21,12 +32,14 @@ const useStyles = makeStyles({
   }
 });
 
-function ToggleRegister() {
+function ToggleRegister(props) {
+  
+
   const classes = useStyles();
   return (
     <ButtonGroup variant="contained" className={classes.root}>
-      <Button className={classes.button}>Funcionario</Button>
-      <Button className={classes.button}>Dependente</Button>
+      <Button className={classes.button} onClick={props.handleToggleValue} color={!props.formFade ? "secondary" : "primary"}>Dependente</Button>
+      <Button className={classes.button} onClick={props.handleToggleValue} color={props.formFade ? "secondary" : "primary"}>Funcionario</Button>
     </ButtonGroup>
   );
 }

@@ -40,7 +40,7 @@ function FormDependent() {
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getEmployee').then((response) => {
       setDataEmployee(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     });
   }, []) ;
 
@@ -48,9 +48,6 @@ function FormDependent() {
     dataEmployee.map((employee) => {
       optionsSelect.push({label: employee.nome, value: employee.cod_funcionario})
   });
-
-  console.log('optionsSelect');
-  console.log(optionsSelect);
   
   return (
     <form className="list-inputs" onSubmit={setSubmitDependent}>

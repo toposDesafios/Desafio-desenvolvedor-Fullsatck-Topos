@@ -5,13 +5,22 @@ import ToggleRegister from '../../components/ToggleRegister';
 import './index.css';
 
 function Register() {
+  const [formFade, setFormFade] = useState(true);
 
+  useEffect(() => {
+    // console.log(ToggleRegister.toggleValue);
+  }, [formFade]);
+
+  const handleFade = () => {
+    setFormFade(!formFade);
+    console.log(formFade);
+  };
 
   return (
     <div className="register-content">
-      <ToggleRegister></ToggleRegister>
-      {/* <FormEmployee></FormEmployee>'' */}
-      <FormDependent></FormDependent>
+      <ToggleRegister formFade={formFade} handleToggleValue={handleFade}></ToggleRegister>
+      { formFade ? <FormEmployee></FormEmployee> : null }
+      { !formFade ? <FormDependent></FormDependent> : null }
     </div>
   );
 }
