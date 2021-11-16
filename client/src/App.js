@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import TextField from '@mui/material/TextField';
 import Axios from 'axios';
 
 function App() {
@@ -80,6 +81,7 @@ function App() {
       <h1>Desafio</h1>
       <h2>Funcionario</h2>
       <form className="list-inputs" onSubmit={setSubmitEmployee}>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined"/>
         <input type="text" name="nome" placeholder="Nome" required onChange={(e) => {setName(e.target.value)}}></input>
         <input type="date" name="data_nascimento" placeholder="Data de Nascimento" required onChange={(e) => {setBirthDate(e.target.value)}}></input>
         <input type="text" name="num_rg" placeholder="Identidade" required onChange={(e) => {setNumRg(e.target.value)}}></input>
