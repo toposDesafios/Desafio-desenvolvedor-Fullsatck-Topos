@@ -69,6 +69,11 @@ app.post("/api/removeDependent", (request, response) => {
   })
  });
 
+
+// SELECT  Funcionario.nome as Funcionario, Dependente.nome as Dependente
+// FROM Dependente
+// JOIN Funcionario ON Funcionario.cod_funcionario = Dependente.cod_funcionario;
+
 app.get("/api/getEmployee", (request, response) => {
   const sql_select = `SELECT * FROM Funcionario;`;
   db.all(sql_select, (err, result) => {
