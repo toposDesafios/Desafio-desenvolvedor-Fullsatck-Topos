@@ -3,17 +3,16 @@ import React, { useState, useEffect } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './index.css';
-import { red } from '@mui/material/colors';
-import { createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#0d47a1",
+      main: "#e3f2fd",
     },
     secondary: {
-      main: '#0d47a1',
+      main: '#1565c0',
     },
   },
 });
@@ -34,13 +33,14 @@ const useStyles = makeStyles({
 
 function ToggleRegister(props) {
   
-
   const classes = useStyles();
   return (
-    <ButtonGroup variant="contained" className={classes.root}>
-      <Button className={classes.button} onClick={props.handleToggleValue} color={!props.formFade ? "secondary" : "primary"}>Dependente</Button>
-      <Button className={classes.button} onClick={props.handleToggleValue} color={props.formFade ? "secondary" : "primary"}>Funcionario</Button>
-    </ButtonGroup>
+    <ThemeProvider theme={theme}>
+      <ButtonGroup variant="contained" className={classes.root}>
+        <Button className={classes.button} onClick={props.handleToggleValue} color={!props.formFade ? "secondary" : "primary"}>Dependente</Button>
+        <Button className={classes.button} onClick={props.handleToggleValue} color={props.formFade ? "secondary" : "primary"}>Funcionario</Button>
+      </ButtonGroup>
+    </ThemeProvider>
   );
 }
 

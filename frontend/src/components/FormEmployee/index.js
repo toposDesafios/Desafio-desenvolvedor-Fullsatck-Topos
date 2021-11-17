@@ -9,14 +9,17 @@ import './index.css';
 
 function FormEmployee() {
   
-  const [name, setName] = useState('');
+  // Variaveis 
+  const [name, setName] = useState(''); 
   const [birthDate, setBirthDate] = useState(new Date('2014-08-18'));
   const [numRg, setNumRg] = useState('');
   const [numCpf, setNumCpf] = useState('');
   const [nameMother, setNameMother] = useState('');
   
-  const setSubmitEmployee = () => {
-    Axios.post('http://localhost:3001/api/insertEmployee', {
+  // Função para submeter o formulario de cadastro de funcionario para api
+  const setSubmitEmployee = (e) => {
+    e.preventDefault(); 
+    Axios.post('http://localhost:3001/api/insertEmployee', {  // Chamada da API
       nome: name, 
       data_nascimento: birthDate, 
       num_rg: numRg, 

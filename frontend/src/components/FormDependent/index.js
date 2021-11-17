@@ -9,7 +9,8 @@ import Axios from 'axios';
 import './index.css';
 
 function FormDependent() {
-  
+
+  // Variaveis
   const [dataEmployee, setDataEmployee] = useState([]);
   const [codEmployee, setCodEmployee] = useState('');
   const [name, setName] = useState('');
@@ -18,8 +19,9 @@ function FormDependent() {
   const [numCpf, setNumCpf] = useState('');
   const [nameMother, setNameMother] = useState('');
 
+  // Função para submeter o formulario de cadastro de funcionario
   const setSubmitDependent = (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     console.log(codEmployee);
     if (codEmployee !== '') {
       Axios.post('http://localhost:3001/api/insertDependent', {
@@ -37,13 +39,14 @@ function FormDependent() {
     }
   };
 
+  // Coleta os dados de funcionarios para uso no SELECT
   useEffect(() => {
     Axios.get('http://localhost:3001/api/getEmployee').then((response) => {
       setDataEmployee(response.data);
-      // console.log(response.data);
     });
   }, []) ;
 
+  // Cria as opções de Autocomplete do Select de funcionarios
   let optionsSelect = [];
     dataEmployee.map((employee) => {
       optionsSelect.push({label: employee.nome, value: employee.cod_funcionario})
@@ -56,7 +59,6 @@ function FormDependent() {
         options={optionsSelect}
         onChange={(event, newValeu) => {setCodEmployee(newValeu.value)}}
         renderInput={(params) => <TextField {...params} label="Funcionario" />}
-
       />
       <TextField name="nome" label="Nome" variant="outlined" required onChange={(e) => {setName(e.target.value)}}/>
       <LocalizationProvider dateAdapter={AdapterDateFns}>

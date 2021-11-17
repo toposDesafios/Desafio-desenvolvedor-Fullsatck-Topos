@@ -1,10 +1,12 @@
 import './App.css';
-import FormRegister from './containers/Register';
+import Register from './containers/Register';
+import Show from './containers/Show';
 
 function App() {
   return (
     <div className="App">
-      <FormRegister></FormRegister>
+      {/* <Register></Register> */}
+      <Show></Show>
     </div>
   );
 }
