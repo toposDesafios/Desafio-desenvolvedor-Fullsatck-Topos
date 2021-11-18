@@ -5,7 +5,7 @@ import Show from './containers/Show';
 function App() {
   return (
     <div className="App">
-      {/* <Register></Register> */}
+      <Register></Register>
       <Show></Show>
     </div>
   );

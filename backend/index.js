@@ -51,12 +51,12 @@ app.post("/api/removeEmployee", (request, response) => {
     return response.status(200).json('Employee deleted');
   })
 
-  db.run(queryDependent, request.body.cod_funcionario ,(err, result) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    return response.status(200).json('Dependent deleted');
-  })
+  // db.run(queryDependent, request.body.cod_funcionario ,(err, result) => {
+  //   if (err) {
+  //     return console.error(err.message);
+  //   }
+  //   return response.status(200).json('Dependent deleted');
+  // })
  });
 
 app.post("/api/removeDependent", (request, response) => {

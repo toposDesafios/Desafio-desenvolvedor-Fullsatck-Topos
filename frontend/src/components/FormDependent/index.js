@@ -32,10 +32,11 @@ function FormDependent() {
         num_cpf: numCpf, 
         nome_mae: nameMother, 
       }).then(() => {
+        window.location.reload();
         return alert('Success');
       });  
     } else {
-      return alert('selecione um funcionario');
+      return alert('Selecione um funcionario');
     }
   };
 
