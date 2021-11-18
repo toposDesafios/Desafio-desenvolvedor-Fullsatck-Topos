@@ -7,6 +7,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -19,6 +21,14 @@ export default function ControlledAccordions() {
   const [expanded, setExpanded] = React.useState(false);
   const [dataEmployee, setDataEmployee] = React.useState([]);
   const [dataDependent, setDataDependent] = React.useState([]);
+  const [stateSnackbar, setStateSnackbar] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'left',
+    message: '',
+    severity: "error"
+  });
+  const { vertical, horizontal, open, message, severity } = stateSnackbar;
 
   // Funcão para exibir e recolher o Accordion 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -31,8 +41,20 @@ export default function ControlledAccordions() {
     Axios.post('http://localhost:3001/api/removeEmployee', {
         cod_funcionario: e.currentTarget.value
       }).then(() => {
-        window.location.reload();
-        return alert('Success');
+        setStateSnackbar({
+          open: true,
+          vertical: 'bottom',
+          horizontal: 'right',
+          message: 'Funcionario removido!',
+          severity: "info"
+        });
+        setTimeout(
+          function() {
+            window.location.reload();
+          }
+          .bind(this),
+          1000
+        );
       });  
   };
 
@@ -42,8 +64,20 @@ export default function ControlledAccordions() {
     Axios.post('http://localhost:3001/api/removeDependent', {
         cod_dependente: e.currentTarget.value
       }).then(() => {
-        window.location.reload();
-        return alert('Success');
+        setStateSnackbar({
+          open: true,
+          vertical: 'bottom',
+          horizontal: 'right',
+          message: 'Dependente removido!',
+          severity: "info"
+        });
+        setTimeout(
+          function() {
+            window.location.reload();
+          }
+          .bind(this),
+          1000
+        );
       });  
   };
 
@@ -136,6 +170,15 @@ export default function ControlledAccordions() {
               }
             })}
           </AccordionDetails>
+          <Snackbar
+            open={open}
+            anchorOrigin={{ vertical, horizontal }}
+            autoHideDuration={6000}
+          >
+            <Alert severity={severity} sx={{ width: '100%' }}>
+              {message}
+            </Alert>
+          </Snackbar>
         </Accordion>
       })}
       

@@ -4,6 +4,8 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import Axios from 'axios';
 import './index.css';
 
@@ -14,7 +16,15 @@ function FormEmployee() {
   const [birthDate, setBirthDate] = useState(new Date('2014-08-18'));
   const [numRg, setNumRg] = useState('');
   const [numCpf, setNumCpf] = useState('');
-  const [nameMother, setNameMother] = useState('');
+  const [nameMother, setNameMother] = useState('');  
+  const [stateSnackbar, setStateSnackbar] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'left',
+    message: '',
+    severity: "error"
+  });
+  const { vertical, horizontal, open, message, severity } = stateSnackbar;
   
   // Função para submeter o formulario de cadastro de funcionario para api
   const setSubmitEmployee = (e) => {
@@ -26,7 +36,20 @@ function FormEmployee() {
       num_cpf: numCpf, 
       nome_mae: nameMother, 
     }).then(() => {
-      return alert('Success');
+      setStateSnackbar({
+        open: true,
+        vertical: 'bottom',
+        horizontal: 'right',
+        message: 'Funcionario cadastrado!',
+        severity: "success"
+      });
+      setTimeout(
+        function() {
+          window.location.reload();
+        }
+        .bind(this),
+        1000
+      );
     });
   };
 
@@ -47,6 +70,15 @@ function FormEmployee() {
       <TextField type="text" name="num_cpf" label="CPF" variant="outlined" required onChange={(e) => {setNumCpf(e.target.value)}}/>
       <TextField type="text" name="nome_mae" label="Nome da Mãe" variant="outlined" required onChange={(e) => {setNameMother(e.target.value)}}/>
       <Button type="submit" variant="contained">Cadastrar</Button>
+      <Snackbar
+        open={open}
+        anchorOrigin={{ vertical, horizontal }}
+        autoHideDuration={6000}
+      >
+        <Alert severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
     </form>
   );
 }

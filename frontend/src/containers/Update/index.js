@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import Axios from 'axios';
 import './index.css';
 
-function FormDependent(props) {
+function UpdateDependent(props) {
 
   // Variaveis
   const [stateSnackbar, setStateSnackbar] = React.useState({

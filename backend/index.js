@@ -41,6 +41,19 @@ app.post("/api/insertDependent", (request, response) => {
     return response.status(200).json('Dependent inserted');
   })
  });
+
+ 
+// REST para update funcionario 
+app.post("/api/updateEmployee", (request, response) => {
+  const query = `UPDATE Funcionario SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_funcionario = 35;`;
+  db.run(query, [request.body.data_nascimento, request.body.nome, request.body.nome_mae, request.body.num_cpf, request.body.num_rg] ,(err, result) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    return response.status(200).json('Employee inserted');
+  })
+ });
+
 // REST para remover funcionario e seus dependentes
 app.post("/api/removeEmployee", (request, response) => {
   const queryEmployee = `DELETE FROM Funcionario WHERE cod_funcionario = ?`;
@@ -54,9 +67,8 @@ app.post("/api/removeEmployee", (request, response) => {
 
   db.run(queryDependent, request.body.cod_funcionario ,(err, result) => {
     if (err) {
-      return console.error(err.message);
+      console.error(err.message);
     }
-    return response.status(200).json('Dependent deleted');
   })
  });
 // REST para remover dependente
