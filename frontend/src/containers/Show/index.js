@@ -20,10 +20,12 @@ export default function ControlledAccordions() {
   const [dataEmployee, setDataEmployee] = React.useState([]);
   const [dataDependent, setDataDependent] = React.useState([]);
 
+  // Funcão para exibir e recolher o Accordion 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  // Chama a API para remover o funcionario e seus dependentes
   const handleRemoveEmployee = (e) => {
     console.log(e.currentTarget.value);
     Axios.post('http://localhost:3001/api/removeEmployee', {
@@ -34,6 +36,7 @@ export default function ControlledAccordions() {
       });  
   };
 
+  // Chama a API para remover um unico dependente
   const handleRemoveDependent = (e) => {
     console.log(e.currentTarget.value);
     Axios.post('http://localhost:3001/api/removeDependent', {
