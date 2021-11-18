@@ -16,11 +16,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { format } from "date-fns";
 import Axios from 'axios';
+import FormUpdate from '../../components/FormUpdate';
 import './index.css';
 
 export default function ControlledAccordions() {
   const [expanded, setExpanded] = React.useState(false);
-  const [openModal, setOpenModal] = React.useState(false);
   const [dataEmployee, setDataEmployee] = React.useState([]);
   const [dataDependent, setDataDependent] = React.useState([]);
   const [stateSnackbar, setStateSnackbar] = React.useState({
@@ -31,14 +31,37 @@ export default function ControlledAccordions() {
     severity: "error"
   });
   const { vertical, horizontal, open, message, severity } = stateSnackbar;
+  const [stateModal, setStateModal] = React.useState({
+    openModal: false,
+    table: 'employee',
+    cod: ''
+  });
 
   // Funcão para exibir e recolher o Accordion 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  // Funcão que abre a passar informações para o modal
+  const handleOpenModalEmployee = (e) => {
+    console.log(e.currentTarget.value);
+    setStateModal({
+      openModal: true,
+      table: 'Funcionario',
+      cod: e.currentTarget.value
+    });
+  };
+// Funcão que abre a passar informações para o modal
+  const handleOpenModalDependent = (e) => {
+    console.log(e.currentTarget.value);
+    setStateModal({
+      openModal: true,
+      table: 'Dependente',
+      cod: e.currentTarget.value
+    });
+  };
+  const handleCloseModal = () => setStateModal({ openModal: false });;
+
   // Chama a API para remover o funcionario e seus dependentes
   const handleRemoveEmployee = (e) => {
     console.log(e.currentTarget.value);
@@ -103,18 +126,6 @@ export default function ControlledAccordions() {
     });
   }, []) ;
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
   return (
     <div className="list-employee">
       {dataEmployee.map((employee) => {
@@ -126,7 +137,7 @@ export default function ControlledAccordions() {
             <Typography sx={{ width: '40%', flexShrink: 0 }}>{employee.nome}</Typography>
             <Typography sx={{ width: '40%', color: 'text.secondary' }}>{employee.num_cpf}</Typography>
             <Typography sx={{ width: '10%', color: 'text.secondary' }}>
-              <IconButton aria-label="edit" size="small"><EditIcon fontSize="small"/></IconButton>
+              <IconButton aria-label="edit" size="small" onClick={handleOpenModalEmployee}  value={employee.cod_funcionario}><EditIcon fontSize="small"/></IconButton>
             </Typography>
             <Typography sx={{ width: '10%', color: 'text.secondary' }}>
               <IconButton aria-label="delete" size="small" onClick={handleRemoveEmployee} value={employee.cod_funcionario}><DeleteIcon color="error" fontSize="small"/></IconButton>
@@ -170,7 +181,7 @@ export default function ControlledAccordions() {
                               </Stack>
                               <Stack>
                                 <Typography sx={{ width: '10%', color: 'text.secondary' }}>
-                                  <IconButton aria-label="edit" size="small" onClick={handleOpenModal}><EditIcon fontSize="small"/></IconButton>
+                                  <IconButton aria-label="edit" size="small" onClick={handleOpenModalDependent} value={dependent.cod_dependente}><EditIcon fontSize="small"/></IconButton>
                                 </Typography>
                                 <Typography sx={{ width: '10%', color: 'text.secondary' }}>
                                   <IconButton aria-label="delete" size="small" onClick={handleRemoveDependent} value={dependent.cod_dependente}><DeleteIcon color="error" fontSize="small"/></IconButton>
@@ -198,19 +209,12 @@ export default function ControlledAccordions() {
         </Alert>
       </Snackbar>
       <Modal
-        open={openModal}
+        open={stateModal.openModal}
         onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Typography sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Typography>
+        <FormUpdate state={stateModal}></FormUpdate>
       </Modal>
     </div>
   );

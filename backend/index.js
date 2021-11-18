@@ -44,14 +44,28 @@ app.post("/api/insertDependent", (request, response) => {
 
  
 // REST para update funcionario 
-app.post("/api/updateEmployee", (request, response) => {
-  const query = `UPDATE Funcionario SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_funcionario = 35;`;
-  db.run(query, [request.body.data_nascimento, request.body.nome, request.body.nome_mae, request.body.num_cpf, request.body.num_rg] ,(err, result) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    return response.status(200).json('Employee inserted');
-  })
+app.post("/api/update", (request, response) => {
+
+  const sqlEmployee = `UPDATE Funcionario SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_funcionario = ?;`;
+  const sqlDependent = `UPDATE Dependente SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_dependente = ?;`;
+  
+  if (request.body.table == 'Funcionario') {
+    console.log('aqui');
+    db.all(sqlEmployee, [request.body.nome, request.body.data_nascimento, request.body.num_rg, request.body.num_cpf, request.body.nome_mae, request.body.cod ], (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result );
+    });
+  } else {
+    console.log('aqui2');
+    db.all(sqlDependent, [request.body.nome, request.body.data_nascimento, request.body.num_rg, request.body.num_cpf, request.body.nome_mae, request.body.cod ], (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result );
+    });
+  }
  });
 
 // REST para remover funcionario e seus dependentes
@@ -89,8 +103,8 @@ app.post("/api/removeDependent", (request, response) => {
 
 // Seleciona os funcionarios 
 app.get("/api/getEmployee", (request, response) => {
-  const sql_select = `SELECT * FROM Funcionario;`;
-  db.all(sql_select, (err, result) => {
+  const sql = `SELECT * FROM Funcionario;`;
+  db.all(sql, (err, result) => {
     if (err) {
       return response.status(500).json({ err });
     }
@@ -100,13 +114,36 @@ app.get("/api/getEmployee", (request, response) => {
 
 // Seleciona os dependentes 
 app.get("/api/getDependent", (request, response) => {
-  const sql_select = `SELECT * FROM Dependente;`;
-  db.all(sql_select, (err, result) => {
+  const sql = `SELECT * FROM Dependente;`;
+  db.all(sql, (err, result) => {
     if (err) {
       return response.status(500).json({ err });
     }
     return response.status(200).json( result );
   });
+});
+
+// Seleciona os dependentes 
+app.get("/api/get", (request, response) => {
+  const sqlEmployee = `SELECT * FROM Funcionario WHERE cod_funcionario = ?;`;
+  const sqlDependent = `SELECT * FROM Dependente WHERE cod_dependente = ?;`;
+
+  if (request.query.table === 'Funcionario') {
+    db.all(sqlEmployee, request.query.cod, (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result[0] );
+    });
+  } else {
+    db.all(sqlDependent, request.query.cod, (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result[0] );
+    });
+  }
+
 });
 
 // Inicia o servidor node
