@@ -2,6 +2,29 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Tecnologias utilizadas com suas respectivas versões;
+    - React.js: 17.0.2
+## Orientações de instalação e execução do ambiente;
+  ### MUI
+    - npm install @material-ui/core@next @emotion/react @emotion/styled @material-ui/styles @material-ui/system@next @material-ui/icons
+  ### Date FNS
+    - npm install date-fns
+  ### Axios
+    - npm install axios
+
+## Orientações de execução do código;
+
+    - npm start
+
+## Orientações de resolução de dependência de pacotes;
+    - MUI: 5.0.0 alpha 
+    - Axios: 0.24.0
+    - Date-fns: 2.25.0
+###  Creditos para o aquivo background.png localizado em "./assets/backugound.png"
+<a href='https://br.freepik.com/vetores/fundo%27%3EFundo vetor criado por coolvector - br.freepik.com</a>
+
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -68,3 +91,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+

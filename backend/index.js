@@ -19,6 +19,55 @@ const db = new sqlite3.Database(db_name, err => {
   console.log("Success database.db");
 });
 
+// SELECT  Funcionario.nome as Funcionario, Dependente.nome as Dependente
+// FROM Dependente
+// JOIN Funcionario ON Funcionario.cod_funcionario = Dependente.cod_funcionario;
+
+// Seleciona os funcionarios 
+app.get("/api/getEmployee", (request, response) => {
+  const sql = `SELECT * FROM Funcionario;`;
+  db.all(sql, (err, result) => {
+    if (err) {
+      return response.status(500).json({ err });
+    }
+    return response.status(200).json( result );
+  });
+});
+
+// Seleciona os dependentes 
+app.get("/api/getDependent", (request, response) => {
+  const sql = `SELECT * FROM Dependente;`;
+  db.all(sql, (err, result) => {
+    if (err) {
+      return response.status(500).json({ err });
+    }
+    return response.status(200).json( result );
+  });
+});
+
+// Seleciona os dependentes 
+app.get("/api/get", (request, response) => {
+  const sqlEmployee = `SELECT * FROM Funcionario WHERE cod_funcionario = ?;`;
+  const sqlDependent = `SELECT * FROM Dependente WHERE cod_dependente = ?;`;
+  // Verifica qual query usar
+  if (request.query.table === 'Funcionario') {
+    db.all(sqlEmployee, request.query.cod, (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result[0] );
+    });
+  } else {
+    db.all(sqlDependent, request.query.cod, (err, result) => {
+      if (err) {
+        return response.status(500).json({ err });
+      }
+      return response.status(200).json( result[0] );
+    });
+  }
+
+});
+
 // REST para inserir funcionario 
 app.post("/api/insertEmployee", (request, response) => {
   const query = `INSERT INTO Funcionario (data_nascimento, nome, nome_mae, num_cpf, num_rg) VALUES
@@ -30,6 +79,7 @@ app.post("/api/insertEmployee", (request, response) => {
     return response.status(200).json('Employee inserted');
   })
  });
+
 // REST para inserir dependente 
 app.post("/api/insertDependent", (request, response) => {
   const query = `INSERT INTO Dependente (cod_funcionario, data_nascimento, nome, nome_mae, num_cpf, num_rg) VALUES
@@ -45,7 +95,6 @@ app.post("/api/insertDependent", (request, response) => {
  
 // REST para update funcionario 
 app.post("/api/update", (request, response) => {
-
   const sqlEmployee = `UPDATE Funcionario SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_funcionario = ?;`;
   const sqlDependent = `UPDATE Dependente SET nome = ?, data_nascimento = ?, num_rg = ?, num_cpf = ?, nome_mae = ? WHERE cod_dependente = ?;`;
   
@@ -85,6 +134,7 @@ app.post("/api/removeEmployee", (request, response) => {
     }
   })
  });
+
 // REST para remover dependente
 app.post("/api/removeDependent", (request, response) => {
   const query = `DELETE FROM Dependente WHERE cod_dependente = ?`;
@@ -95,56 +145,6 @@ app.post("/api/removeDependent", (request, response) => {
     return response.status(200).json('Dependent deleted');
   })
  });
-
-
-// SELECT  Funcionario.nome as Funcionario, Dependente.nome as Dependente
-// FROM Dependente
-// JOIN Funcionario ON Funcionario.cod_funcionario = Dependente.cod_funcionario;
-
-// Seleciona os funcionarios 
-app.get("/api/getEmployee", (request, response) => {
-  const sql = `SELECT * FROM Funcionario;`;
-  db.all(sql, (err, result) => {
-    if (err) {
-      return response.status(500).json({ err });
-    }
-    return response.status(200).json( result );
-  });
-});
-
-// Seleciona os dependentes 
-app.get("/api/getDependent", (request, response) => {
-  const sql = `SELECT * FROM Dependente;`;
-  db.all(sql, (err, result) => {
-    if (err) {
-      return response.status(500).json({ err });
-    }
-    return response.status(200).json( result );
-  });
-});
-
-// Seleciona os dependentes 
-app.get("/api/get", (request, response) => {
-  const sqlEmployee = `SELECT * FROM Funcionario WHERE cod_funcionario = ?;`;
-  const sqlDependent = `SELECT * FROM Dependente WHERE cod_dependente = ?;`;
-
-  if (request.query.table === 'Funcionario') {
-    db.all(sqlEmployee, request.query.cod, (err, result) => {
-      if (err) {
-        return response.status(500).json({ err });
-      }
-      return response.status(200).json( result[0] );
-    });
-  } else {
-    db.all(sqlDependent, request.query.cod, (err, result) => {
-      if (err) {
-        return response.status(500).json({ err });
-      }
-      return response.status(200).json( result[0] );
-    });
-  }
-
-});
 
 // Inicia o servidor node
 app.listen(3001, () => { 

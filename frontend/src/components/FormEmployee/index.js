@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import brLocale from 'date-fns/locale/pt-BR';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Axios from 'axios';
@@ -56,11 +57,12 @@ function FormEmployee() {
   return (
     <form className="list-inputs" onSubmit={setSubmitEmployee}>
       <TextField name="nome" label="Nome" variant="outlined" required onChange={(e) => {setName(e.target.value)}}/>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={brLocale}>
         <DatePicker
           label="Data de Nascimento"
           name="data_nascimento"
           value={birthDate}
+          locale={brLocale}
           required
           onChange={(newDate) => {setBirthDate(newDate)}}
           renderInput={(params) => <TextField {...params} />}

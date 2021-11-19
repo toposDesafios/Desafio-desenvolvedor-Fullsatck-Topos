@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './index.css';
 
+// Função para alterar vareaveis de tema MUI 
 const theme = createTheme({
   palette: {
     primary: {
@@ -16,7 +17,7 @@ const theme = createTheme({
     },
   },
 });
-
+// Estilo de tema MUI 
 const useStyles = makeStyles({
   root: {
     width: '400px',

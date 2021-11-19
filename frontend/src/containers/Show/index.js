@@ -26,7 +26,7 @@ export default function ControlledAccordions() {
   const [stateSnackbar, setStateSnackbar] = React.useState({
     open: false,
     vertical: 'bottom',
-    horizontal: 'left',
+    horizontal: 'right',
     message: '',
     severity: "error"
   });
@@ -214,7 +214,7 @@ export default function ControlledAccordions() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <FormUpdate state={stateModal}></FormUpdate>
+        <FormUpdate state={stateModal} closeModal={handleCloseModal}></FormUpdate>
       </Modal>
     </div>
   );
