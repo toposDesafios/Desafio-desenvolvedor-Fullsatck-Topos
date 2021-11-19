@@ -9,7 +9,7 @@ function Footer() {
         color="text.secondary"
         variant="caption"
       >
-        Desenvolvido por <i>Jonas Teixeira</i> para o processo seletivo da <b>Topos</b>
+        Desenvolvido por <b>Jonas Teixeira</b> para o processo seletivo da <b>Topos</b>.
       </Typography>
     </footer>
   );
