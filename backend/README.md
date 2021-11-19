@@ -1,3 +1,4 @@
+# Desafio Topos Fullstack Informática
 ## Tecnologias utilizadas com suas respectivas versões;
     - Node.js: 17.1.0
     - SQLite: 3.36.0
@@ -27,15 +28,3 @@
 
 ## Orientações de execução de migrações de banco de dados ou disponibilização do script;
     - Arquivo sql.sql, localizado no caminho ./database/sql.sql
-
-
-
-# Desafio Topos Fullstack Informática
-
-## Processo seletivo desenvolvedor Fullstack
-
-### Processo seletivo desenvolvedor Fullstack
-
-Estamos buscando candidatos para fazer parte do nosso TIME, então criamos este pequeno desafio para melhor conhecer as qualidades dos profissionais.
-
-**Atenção:** Crie um fork desse projeto no seu Perfil do GitHub e depois nos envie o link para o email -> victor.gomes@topos.inf.br copiando para -> rodolfo.neto@topos.inf.br
