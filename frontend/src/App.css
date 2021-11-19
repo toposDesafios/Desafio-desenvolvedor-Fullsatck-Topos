@@ -1,0 +1,12 @@
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  gap: 30px;
+  background-image: url(./assets/backugound.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
